@@ -1,0 +1,401 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  font-family: sans-serif;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0;
+}
+
+body.darkmode {
+  background: #111827;
+  color: white;
+}
+
+
+
+
+body.darkmode #right {
+  background-color: #1F2937;
+  /* or any dark shade */
+  color: white;
+}
+
+body.darkmode .navbar {
+  background-color: #1F2937;
+  color: white;
+}
+
+body.darkmode .logo {
+  color: white;
+}
+
+body.darkmode .summary,
+body.darkmode .first,
+body.darkmode .exe {
+  background-color: #1F2937;
+  color: white;
+}
+
+body.darkmode .explist {
+  color: black;
+}
+
+body.darkmode li {
+  color: black;
+}
+
+body.darkmode #inc {
+  color: white;
+}
+
+
+
+#dark {
+  width: 40px;
+  height: 40px;
+  font-size: 30px;
+  border-radius: 70%;
+  background-color: rgb(34, 35, 45);
+  color: white;
+}
+
+#content {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+  padding: 0px 20px;
+  padding-top: 110px;
+  padding-bottom: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+
+}
+
+#left,
+#right {
+  flex: 1;
+  max-width: 100%;
+  min-height: auto;
+}
+
+#left {
+  height: 100%;
+  width: 50%;
+}
+
+#right {
+  height: 100%;
+  width: 50%;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+}
+
+#imag {
+  display: flex;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  justify-content: end;
+  /* right: 200px; */
+}
+
+#imag img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+#add,
+#cal,
+#remove {
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  background-color: green;
+}
+
+#add:hover {
+  background-color: greenyellow;
+  color: rgb(0, 0, 0);
+}
+
+#remove:hover {
+  background-color: red;
+  color: white;
+}
+
+.logo {
+  color: #000000;
+  font-weight: 200;
+  font-size: 25px;
+}
+
+.logo:hover,
+#ba:hover {
+  color: #22C55E;
+
+}
+
+#ba {
+  color: green;
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+
+
+.navbar {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 10px;
+  position: fixed;
+  position: fixed;
+  padding: 15px 40px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 17px;
+}
+
+.navbar ul li {
+  list-style: none;
+  display: inline-block;
+  margin: 0 10px;
+  position: relative;
+
+}
+
+.navbar ul li a {
+
+  text-decoration: none;
+  color: #000000;
+  text-transform: uppercase;
+}
+
+.navbar ul li ::after {
+
+  content: '';
+  height: 3px;
+  width: 0%;
+  background: #0e7679;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  transition: 0.5s;
+}
+
+.navbar ul li :hover::after {
+  width: 100%;
+}
+
+input {
+  padding: 10px;
+  width: 100%;
+  font-size: 18px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.first {
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  margin-bottom: 40px;
+
+}
+
+#inner {
+  width: 100%;
+}
+
+#txt {
+  font-size: 25px;
+  margin-bottom: 15px;
+}
+
+#in {
+  color: rgb(164, 12, 12);
+}
+
+.summary {
+  width: 95%;
+  display: block;
+  font-size: 30px;
+  padding: 20px;
+
+  margin-bottom: 50px;
+  margin-top: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+}
+
+p {
+  font-size: 20px;
+
+}
+
+.sum {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+#inc {
+  font-size: 20px;
+  color: rgb(0, 0, 0);
+}
+
+#exp {
+  font-size: 20px;
+  color: red;
+}
+
+#sav {
+  font-size: 20px;
+  color: #22C55E;
+}
+
+#income {
+  width: 80%;
+  margin-bottom: 10px;
+}
+
+
+
+#explist {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #F9FAFB;
+  border-radius: 4px;
+  font-size: 20px;
+}
+
+
+
+.exe {
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  margin-bottom: 40px;
+  padding: 20px;
+}
+
+#item {
+  width: 96%;
+  margin-bottom: 10px;
+}
+
+.n {
+  width: 80%;
+}
+
+
+#ex {
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+
+#exl {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+#cal {
+  height: 45px;
+  background-color: green;
+  color: white;
+
+
+}
+
+#cal:hover {
+  background-color: sienna;
+}
+
+@media (max-width: 768px) {
+  body {
+    height: 600px;
+
+  }
+  body.darkmode #right {
+    background-color: #1F2937;
+    color: white;
+  }
+
+  .navbar {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    background: white;
+    top: 0;
+    left: 0;
+    font-size: 15px;
+  }
+ 
+
+  #left,
+  #right {
+    width: 100%;
+  }
+
+  #right {
+    margin-top: 200px;
+  }
+
+
+  .summary,
+  .first,
+  .exe {
+    font-size: 18px;
+    padding: 10px;
+    width: 100%;
+  }
+
+  .navbar ul  {
+    display: block;
+    width: 10px;
+  }
+  #dark{
+    width: 30px;
+    height: 35px;
+  }
+
+  #income,
+  #item,
+  #amt {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  #add,
+  #cal {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  #explist {
+    font-size: 16px;
+  }
+}
