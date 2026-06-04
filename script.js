@@ -1,75 +1,102 @@
-var add = document.querySelector("#add");
-var remove = document.querySelector("#remove");
-var ul = document.querySelector("#explist");
-var itm = document.querySelector("#item");
-var amt = document.querySelector("#amt");
-var income = document.querySelector("#income");
-var cal = document.querySelector("#cal");
-var inc = document.querySelector("#income"); // Refers to the input
-var am = document.querySelector("#inc");
-var exp = document.querySelector("#exp");
-var sav = document.querySelector("#sav");
-let ame;
-let total = 0;
-let theme = document.querySelector("#dark");
-let body = document.body;
+/* ─── Dark Mode Toggle ─────────────────────────────────── */
+const toggleBtn = document.getElementById('dark-toggle');
+const body      = document.body;
+let dark = false;
 
-function dark() {
-  body.classList.add("darkmode");
-  localStorage.setItem("dark", "enable");
-}
-function light() {
-  body.classList.remove("darkmode");
-  localStorage.setItem("dark", "disable");
-}
-if (localStorage.getItem("dark") === "enable") {
-  dark();
-}
-
-theme.addEventListener("click", function () {
-  if (body.classList.contains("darkmode")) {
-    light();
-  } else {
-    dark();
-  }
+toggleBtn.addEventListener('click', () => {
+  dark = !dark;
+  body.classList.toggle('dark', dark);
+  toggleBtn.textContent = dark ? '☀️' : '🌙';
 });
-cal.addEventListener("click", function () {
-  if (income.value.trim() === "") {
-    inc.textContent = " !Error";
-    income.style.border = "2px solid red";
-    income.style.boxShadow = "0 0 10px red";
+
+/* ─── State ────────────────────────────────────────────── */
+let income   = 0;
+let expenses = [];        // [{name, amount}]
+let selected = new Set(); // indices of selected items
+
+/* ─── DOM refs ─────────────────────────────────────────── */
+const incVal  = document.getElementById('inc-val');
+const expVal  = document.getElementById('exp-val');
+const savVal  = document.getElementById('sav-val');
+const list    = document.getElementById('explist');
+const empty   = document.getElementById('empty-state');
+const counter = document.getElementById('count');
+
+/* ─── Helpers ──────────────────────────────────────────── */
+const fmt = n => n.toLocaleString('en-IN');
+
+function recalc() {
+  const totalExp = expenses.reduce((s, e) => s + e.amount, 0);
+  const savings  = income - totalExp;
+  incVal.textContent = fmt(income);
+  expVal.textContent = fmt(totalExp);
+  savVal.textContent = fmt(savings);
+  // Turn savings red if negative
+  const savEl = document.getElementById('sav');
+  savEl.style.color = savings < 0 ? 'var(--red-soft)' : '';
+}
+
+function renderList() {
+  list.innerHTML = '';
+  counter.textContent = `${expenses.length} item${expenses.length !== 1 ? 's' : ''}`;
+
+  if (expenses.length === 0) {
+    empty.style.display = 'flex';
     return;
-  } else {
-    inc.textContent = "";
-    income.style.border = "2px solid black";
-    income.style.boxShadow = "0 0 10px black";
   }
-  if (ul.children.length === 0) {
-    alert("Please provide Your Expenses details!");
-  } else {
-    ame = parseFloat(income.value);
-    am.textContent = "₹" + income.value;
-    exp.textContent = "₹" + total;
-    sav.textContent = "₹" + (ame - total);
+  empty.style.display = 'none';
+
+  expenses.forEach((exp, i) => {
+    const li = document.createElement('li');
+    li.className = 'expense-list__item' + (selected.has(i) ? ' is-selected' : '');
+    li.innerHTML = `
+      <div class="expense-list__item-left">
+        <span class="expense-list__dot"></span>
+        <span class="expense-list__name">${exp.name}</span>
+      </div>
+      <span class="expense-list__amount">₹${fmt(exp.amount)}</span>
+    `;
+    li.addEventListener('click', () => {
+      if (selected.has(i)) selected.delete(i);
+      else selected.add(i);
+      renderList();
+    });
+    list.appendChild(li);
+  });
+}
+
+/* ─── Calculate Income ─────────────────────────────────── */
+document.getElementById('cal').addEventListener('click', () => {
+  const val = parseFloat(document.getElementById('income').value);
+  if (!isNaN(val) && val >= 0) {
+    income = val;
+    recalc();
   }
 });
 
-add.addEventListener("click", function () {
-  if (itm.value.trim() === "" || amt.value.trim() === "") {
-    alert("Please enter your expense details !");
-  } else {
-    let amount = parseFloat(amt.value);
-    total += amount;
-    var li = document.createElement("li");
-    li.textContent = itm.value + " - ₹" + amt.value;
-    li.dataset.amount = amount;
-    ul.appendChild(li);
-
-    itm.value = "";
-    amt.value = "";
-  }
+/* ─── Add Expense ──────────────────────────────────────── */
+document.getElementById('add').addEventListener('click', () => {
+  const nameEl = document.getElementById('item');
+  const amtEl  = document.getElementById('amt');
+  const name   = nameEl.value.trim();
+  const amount = parseFloat(amtEl.value);
+  if (!name || isNaN(amount) || amount <= 0) return;
+  expenses.push({ name, amount });
+  nameEl.value = '';
+  amtEl.value  = '';
+  selected.clear();
+  renderList();
+  recalc();
 });
 
-remove.addEventListener("click", function () {
-  ul.removeChild(ul.lastElementChild);
+/* ─── Remove Selected ──────────────────────────────────── */
+document.getElementById('remove').addEventListener('click', () => {
+  expenses = expenses.filter((_, i) => !selected.has(i));
+  selected.clear();
+  renderList();
+  recalc();
 });
+
+/* ─── Init ─────────────────────────────────────────────── */
+renderList();
+recalc();

@@ -1,78 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <title>Money Map</title>
-  </head>
-  <body>
-    
-    <nav class="navbar">
-      <div class="logo">💸Money Map</div>
-      <ul>
-        <!-- <li><a href="#">🏠 Home</a></li>
-        <li><a href="transactions.html">📜 View Transactions</a></li>
-        <li><a href="budget.html">💰 Manage Budget</a></li>
-        <li><a href="charts.html">📊 View Spending Report</a></li>
-        <li><a href="savings.html">🏦 Track Savings</a></li> -->
-        <button id="dark"><i class="fa-regular fa-moon"></i></button>
-      </ul>
-    </nav>
-    <div id="content">
-      <div id="left">
-        <div class="summary">
-          <h1 id="ba">Your Balances</h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Money Map</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
-          <div class="sum">
-            <p>Income:</p>
-            <div id="inc">₹</div>
+  <!-- ─── Nav ─────────────────────────────────────────────── -->
+  <nav class="nav">
+    <a class="nav__brand" href="#">
+      <span class="nav__brand-money">Money</span><span class="nav__brand-map">Map</span>
+    </a>
+    <div class="nav__actions">
+      <button class="btn-icon" id="dark-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+    </div>
+  </nav>
+
+  <!-- ─── Main Layout ───────────────────────────────────────── -->
+  <main class="layout">
+
+    <!-- Left: Summary + Forms -->
+    <div class="col-left">
+
+      <!-- Balance Summary -->
+      <div class="summary-card">
+        <div class="summary-card__label">Overview</div>
+        <div class="summary-card__grid">
+          <div class="balance-item">
+            <div class="balance-item__name">Income</div>
+            <div class="balance-item__value is-income" id="inc">
+              <span class="balance-item__currency">₹</span><span id="inc-val">0</span>
+            </div>
           </div>
-
-          <div class="sum">
-            <p>Expenses:</p>
-            <div id="exp">₹</div>
+          <div class="balance-item">
+            <div class="balance-item__name">Expenses</div>
+            <div class="balance-item__value is-expense" id="exp">
+              <span class="balance-item__currency">₹</span><span id="exp-val">0</span>
+            </div>
           </div>
-
-          <div class="sum">
-            <p>Savings:</p>
-            <div id="sav">₹</div>
-          </div>
-        </div>
-
-        <div class="first">
-          <label id="txt">Enter Your Income </label>
-          <div class="inner">
-            <input id="income" placeholder="Your Income" type="number" />
-            <button id="cal">Calculate</button>
-          </div>
-        </div>
-
-        <div class="exe">
-          <label id="ex">Your Expenses </label>
-
-          <input type="text" placeholder="Item name" id="item" class="n" />
-          <div class="do">
-            <input type="number" placeholder="Amount" id="amt" class="n" />
-            <button id="add">Add item</button>
+          <div class="balance-item">
+            <div class="balance-item__name">Savings</div>
+            <div class="balance-item__value is-savings" id="sav">
+              <span class="balance-item__currency">₹</span><span id="sav-val">0</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <div id="right">
-        <div id="exl">Expense list</div>
-        <ul id="explist"></ul>
-        <button id="remove">Remove Item</button>
+      <!-- Income Entry -->
+      <div class="form-card form-card--income">
+        <div class="form-card__title">Monthly Income</div>
+        <div class="form-card__row">
+          <input class="input-field" type="number" id="income" placeholder="e.g. 85000" />
+          <button class="btn-primary" id="cal">Calculate</button>
+        </div>
+      </div>
+
+      <!-- Expense Entry -->
+      <div class="form-card">
+        <div class="form-card__title">Add Expense</div>
+        <div class="form-card__two-col">
+          <input class="input-field" type="text" id="item" placeholder="Item name" />
+          <input class="input-field" type="number" id="amt" placeholder="Amount" />
+        </div>
+        <button class="btn-primary btn-primary--block" id="add">Add to list</button>
+      </div>
+
+    </div>
+
+    <!-- Right: Expense List Panel -->
+    <div class="col-right">
+      <div class="expense-panel">
+        <div class="expense-panel__header">
+          <span class="expense-panel__title">Expenses</span>
+          <span class="expense-panel__count" id="count">0 items</span>
+        </div>
+        <div class="expense-panel__body" id="list-body">
+          <div class="expense-panel__empty" id="empty-state">
+            <span class="expense-panel__empty-icon">↓</span>
+            <span class="expense-panel__empty-text">No expenses added yet</span>
+          </div>
+          <ul class="expense-list" id="explist"></ul>
+        </div>
+        <div class="expense-panel__footer">
+          <button class="btn-danger" id="remove">Remove selected</button>
+        </div>
       </div>
     </div>
 
-    <script src="script.js"></script>
-  </body>
+  </main>
+
+  <script src="script.js"></script>
+</body>
 </html>
